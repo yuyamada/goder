@@ -64,3 +64,17 @@ func TestNextFloats(t *testing.T) {
 	actual := io.NextFloats(3)
 	assert.Equal(t, expected, actual)
 }
+
+func TestPrintln(t *testing.T) {
+	// stdout := new(bytes.Buffer)
+	// io := io.New(nil, stdout)
+	// expected := "hello\n"
+	// io.Println("hello")
+	// actual := stdout.ReadString
+}
+
+func TestPrintf(t *testing.T) {}
+
+func TestLog(t *testing.T) {}
+
+func TestLogf(t *testing.T) {}

@@ -96,10 +96,10 @@ func (io *IO) Printf(format string, a ...interface{}) {
 	fmt.Fprintf(io.writer, format, a...)
 }
 
-func (io *IO) Log(a ...interface{}) {
+func Log(a ...interface{}) {
 	fmt.Fprintln(os.Stderr, a...)
 }
 
-func (io *IO) Logf(format string, a ...interface{}) {
+func Logf(format string, a ...interface{}) {
 	fmt.Fprintf(os.Stderr, format, a...)
 }
