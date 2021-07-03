@@ -4,27 +4,28 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	"os"
 	"strconv"
 	"strings"
 )
 
 type IO struct {
-	reader    *bufio.Reader
-	writer    *bufio.Writer
+	stdin     *bufio.Reader
+	stdout    *bufio.Writer
+	stderr    io.Writer
 	tokens    []string
 	nextToken int
 }
 
-func New(r io.Reader, w io.Writer) *IO {
+func New(stdin io.Reader, stdout io.Writer, stderr io.Writer) *IO {
 	return &IO{
-		reader: bufio.NewReader(r),
-		writer: bufio.NewWriter(w),
+		stdin:  bufio.NewReader(stdin),
+		stdout: bufio.NewWriter(stdout),
+		stderr: stderr,
 	}
 }
 
 func (io *IO) Flush() {
-	err := io.writer.Flush()
+	err := io.stdout.Flush()
 	if err != nil {
 		panic(err)
 	}
@@ -33,7 +34,7 @@ func (io *IO) Flush() {
 func (io *IO) NextLine() string {
 	var buffer []byte
 	for {
-		line, isPrefix, err := io.reader.ReadLine()
+		line, isPrefix, err := io.stdin.ReadLine()
 		if err != nil {
 			panic(err)
 		}
@@ -89,17 +90,17 @@ func (io *IO) NextFloats(n int) []float64 {
 }
 
 func (io *IO) Println(a ...interface{}) {
-	fmt.Fprintln(io.writer, a...)
+	fmt.Fprintln(io.stdout, a...)
 }
 
 func (io *IO) Printf(format string, a ...interface{}) {
-	fmt.Fprintf(io.writer, format, a...)
+	fmt.Fprintf(io.stdout, format, a...)
 }
 
-func Log(a ...interface{}) {
-	fmt.Fprintln(os.Stderr, a...)
+func (io *IO) Log(a ...interface{}) {
+	fmt.Fprintln(io.stderr, a...)
 }
 
-func Logf(format string, a ...interface{}) {
-	fmt.Fprintf(os.Stderr, format, a...)
+func (io *IO) Logf(format string, a ...interface{}) {
+	fmt.Fprintf(io.stderr, format, a...)
 }
