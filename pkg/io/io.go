@@ -4,9 +4,12 @@ import (
 	"bufio"
 	"fmt"
 	"io"
+	"os"
 	"strconv"
 	"strings"
 )
+
+var Stdio = New(os.Stdin, os.Stdout, os.Stdout)
 
 type IO struct {
 	stdin     *bufio.Reader
